@@ -1,0 +1,43 @@
+app-id: io.openloco.OpenLoco
+runtime: org.freedesktop.Platform
+runtime-version: '22.08'
+sdk: org.freedesktop.Sdk
+command: OpenLoco
+rename-appdata-file: openloco.appdata.xml
+rename-desktop-file: openloco.desktop
+rename-icon: openloco
+copy-icon: true
+finish-args:
+    # X11 + XShm access
+    - --share=ipc
+    - --socket=x11
+    - --socket=pulseaudio
+    # Network access - for multiplayer
+    - --share=network
+    # OpenGL access
+    - --device=dri
+    # 32 bit application
+    - --allow=multiarch
+add-extensions:
+    - org.freedesktop.Platform.Compat.i386:
+        - directory: lib/i386-linux-gnu
+          version: '22.08'   
+    # This is not strictly required, but needed for debugging 32 bit programs
+      org.freedesktop.Platform.Compat.i386.Debug:
+        - directory: lib/debug/lib/i386-linux-gnu
+          version: '22.08'
+          no-autodownload: true
+
+modules:
+    - name: OpenLoco
+      buildsystem: cmake
+      builddir: true
+      build-options:
+        - cxxflags: -Wno-error=null-dereference
+      config-opts: 
+        - -DOPENLOCO_USE_CACHE=OFF
+        - -DOPENLOCO_BUILD_TESTS=OFF
+      sources:
+        - type: git
+          url: https://github.com/OpenLoco/OpenLoco.git
+          tag: v22.10

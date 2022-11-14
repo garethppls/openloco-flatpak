@@ -1,0 +1,1 @@
+# openloco-flatpak
