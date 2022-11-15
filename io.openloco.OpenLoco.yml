@@ -40,6 +40,7 @@ modules:
       config-opts: 
         - -DOPENLOCO_USE_CACHE=OFF
         - -DOPENLOCO_BUILD_TESTS=OFF
+        - -DSTRICT=OFF
       sources:
         - type: git
           url: https://github.com/garethppls/OpenLoco.git
