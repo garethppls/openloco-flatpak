@@ -30,14 +30,14 @@ add-extensions:
 
 modules:
     - name: OpenLoco
-      buildsystem: cmake
+      buildsystem: cmake-ninja
       builddir: true
       build-options:
-        - cxxflags: -Wno-error=null-dereference
+        - cxxflags: -m32 -Wno-error=null-dereference  
       config-opts: 
         - -DOPENLOCO_USE_CACHE=OFF
         - -DOPENLOCO_BUILD_TESTS=OFF
       sources:
         - type: git
-          url: https://github.com/OpenLoco/OpenLoco.git
-          tag: v22.10
+          url: https://github.com/garethppls/OpenLoco.git
+          commit: a22a1cc61c5431b540cf2a37bb15a6e2a794421f
