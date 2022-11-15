@@ -7,6 +7,9 @@ rename-appdata-file: openloco.appdata.xml
 rename-desktop-file: openloco.desktop
 rename-icon: openloco
 copy-icon: true
+sdk-extensions:
+    - org.freedesktop.Sdk.Compat.i386
+    - org.freedesktop.Sdk.Extension.toolchain-i386
 finish-args:
     # X11 + XShm access
     - --share=ipc
