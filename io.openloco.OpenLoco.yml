@@ -31,17 +31,30 @@ add-extensions:
           version: '22.08'
           no-autodownload: true
 
+x-compat-i386-opts: &compat_i386_opts   
+  prepend-pkg-config-path: /usr/lib/i386-linux-gnu/pkgconfig
+  ldflags: -L/usr/lib/i386-linux-gnu
+  prepend-path: /usr/lib/sdk/toolchain-i386/bin
+  env:
+    CC: i686-unknown-linux-gnu-gcc
+    CXX: i686-unknown-linux-gnu-g++
+  libdir: /usr/lib/i386-linux-gnu       
+
 modules:
     - name: OpenLoco
       buildsystem: cmake-ninja
       builddir: true
-      build-options:
-        - cxxflags: -m32 -Wno-error=null-dereference  
+      build-options: *compat_i386_opts 
       config-opts: 
+        - -DCMAKE_BUILD_TYPE=release
         - -DOPENLOCO_USE_CACHE=OFF
         - -DOPENLOCO_BUILD_TESTS=OFF
+        - -DSDL2_DIR=/usr/lib/i386-linux-gnu/cmake/SDL2
+        - -DPNG_LIBRARY=/usr/lib/i386-linux-gnu/libpng16.so
+        - -DPNG_PNG_INCLUDE_DIR=/usr/include
+        - -DZLIB_LIBRARY=/usr/lib/i386-linux-gnu/libz.so
         - -DSTRICT=OFF
       sources:
         - type: git
           url: https://github.com/garethppls/OpenLoco.git
-          commit: a22a1cc61c5431b540cf2a37bb15a6e2a794421f
+          commit: 062b43dea02d14e38d9f61e30f866b8ffb80e73e
