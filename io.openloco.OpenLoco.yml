@@ -17,6 +17,8 @@ finish-args:
     - --socket=pulseaudio
     # Network access - for multiplayer
     - --share=network
+    # Access to home folder
+    - --filesystem=home
     # OpenGL access
     - --device=dri
     # 32 bit application
@@ -52,4 +54,6 @@ modules:
       sources:
         - type: git
           url: https://github.com/garethppls/OpenLoco.git
-          commit: 062b43dea02d14e38d9f61e30f866b8ffb80e73e
+          commit: 3271827a438e484bd2766f6567191804bab60348
+      post-install:
+        - mkdir -p /app/lib/i386-linux-gnu
