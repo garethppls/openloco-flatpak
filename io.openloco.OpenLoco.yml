@@ -35,11 +35,12 @@ add-extensions:
 
 x-compat-i386-opts: &compat_i386_opts   
   ldflags: -Wl,-rpath-link=/usr/lib/i386-linux-gnu # FIXME: This isn't usually required but is needed to make progress with the build
-  prepend-pkg-config-path: /usr/lib/i386-linux-gnu/pkgconfig
+  prepend-pkg-config-path: /app/lib32/pkgconfig:/usr/lib/i386-linux-gnu/pkgconfig
   prepend-path: /usr/lib/sdk/toolchain-i386/bin
   env:
     CC: i686-unknown-linux-gnu-gcc
-    CXX: i686-unknown-linux-gnu-g++      
+    CXX: i686-unknown-linux-gnu-g++
+  libdir: /app/lib32
 
 modules:
     - name: OpenLoco
@@ -54,6 +55,23 @@ modules:
       sources:
         - type: git
           url: https://github.com/garethppls/OpenLoco.git
-          commit: 3271827a438e484bd2766f6567191804bab60348
+          commit: 4f132a8b0ebaeb7b74dc742403d5b2a8d1854c87
       post-install:
         - mkdir -p /app/lib/i386-linux-gnu
+      modules:
+        - name: yaml-cpp
+          buildsystem: cmake-ninja
+          builddir: true
+          build-options: *compat_i386_opts
+          sources:
+            - type: git
+              url: https://github.com/jbeder/yaml-cpp
+              commit: 1b50109f7bea60bd382d8ea7befce3d2bd67da5f
+        - name: span-lite
+          buildsystem: cmake-ninja
+          builddir: true
+          build-options: *compat_i386_opts
+          sources:
+            - type: git
+              url: https://github.com/martinmoene/span-lite
+              tag: v0.10.3
