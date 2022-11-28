@@ -34,7 +34,7 @@ add-extensions:
         no-autodownload: true
 
 x-compat-i386-opts: &compat_i386_opts   
-  ldflags: -Wl,-rpath-link=/usr/lib/i386-linux-gnu # FIXME: This isn't usually required but is needed to make progress with the build
+  ldflags: -Wl,-rpath-link=/usr/lib/i386-linux-gnu,-L/app/lib32/ # FIXME: This isn't usually required but is needed to make progress with the build
   prepend-pkg-config-path: /app/lib32/pkgconfig:/usr/lib/i386-linux-gnu/pkgconfig
   prepend-path: /usr/lib/sdk/toolchain-i386/bin
   env:
@@ -42,7 +42,7 @@ x-compat-i386-opts: &compat_i386_opts
     CXX: i686-unknown-linux-gnu-g++
   libdir: /app/lib32
 
-modules:
+modules:    
     - name: OpenLoco
       buildsystem: cmake-ninja
       builddir: true
@@ -55,7 +55,7 @@ modules:
       sources:
         - type: git
           url: https://github.com/garethppls/OpenLoco.git
-          commit: 4f132a8b0ebaeb7b74dc742403d5b2a8d1854c87
+          commit: b59982da608e0938e6134822eaca6b02f98582f2
       post-install:
         - mkdir -p /app/lib/i386-linux-gnu
       modules:
@@ -71,6 +71,8 @@ modules:
           buildsystem: cmake-ninja
           builddir: true
           build-options: *compat_i386_opts
+          config-opts:
+            - -DSPAN_LITE_OPT_BUILD_TESTS=OFF
           sources:
             - type: git
               url: https://github.com/martinmoene/span-lite
