@@ -54,8 +54,7 @@ modules:
         - -DSTRICT=OFF
       sources:
         - type: git
-          url: https://github.com/garethppls/OpenLoco.git
-          commit: b59982da608e0938e6134822eaca6b02f98582f2
+          url: https://github.com/OpenLoco/OpenLoco.git
       post-install:
         - mkdir -p /app/lib/i386-linux-gnu
       modules:
